@@ -4,7 +4,8 @@
 #include <LCD.h>
 #include <SD.h>
 #include <SPI.h>
-#include <Streaming.h>
+
+#define MAX_NLENGTH  10
 
 void Draw::DispLogo()
 {
@@ -133,28 +134,47 @@ Tft.lcd_display_string(70, 170, (const uint8_t *)"On Both Hands", FONT_1608, WHI
 }
 }
 
-void Draw::DispResult(){ // sel to choose between previous and current measurement
+void Draw::DispResult(int a, int u){ // a displays number, u switches btwn units
  Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Force Produced is", FONT_1608, MAGENTA);
- Tft.lcd_display_num(48, 120+15, 25, MAX_NLENGTH, FONT_1608, MAGENTA);
- Tft.lcd_display_string(90, 135+15, (const uint8_t *)"newtons", FONT_1608, MAGENTA);
-}
-
-void Draw::ClrResult(){ // sel to choose between previous and current measurement
- Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Force Produced is", FONT_1608, WHITE);
- Tft.lcd_display_num(48, 120+15, 25, MAX_NLENGTH, FONT_1608, WHITE);
- Tft.lcd_display_string(90, 135+15, (const uint8_t *)"newtons", FONT_1608, WHITE);
-}
-
-void Draw::DispProbe(){
- Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Probe reading is", FONT_1608, MAGENTA);
- Tft.lcd_display_num(48, 120+15, 25, MAX_NLENGTH, FONT_1608, MAGENTA);
-}
-
-void Draw::ClrProbe(){ 
- Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Probe reading is", FONT_1608, WHITE);
- Tft.lcd_display_num(48, 120+15, 25, MAX_NLENGTH, FONT_1608, WHITE);
+ if (u== 1) {
+ Tft.lcd_display_num(48, 120+15, a, MAX_NLENGTH, FONT_1608, MAGENTA);
+ Tft.lcd_display_string(90, 135+15, (const uint8_t *)"kgf", FONT_1608, MAGENTA);
+            }
+ else {
+ Tft.lcd_display_num(48, 120+15, a*2.20462, MAX_NLENGTH, FONT_1608, MAGENTA);
+ Tft.lcd_display_string(90, 135+15, (const uint8_t *)"lbf", FONT_1608, MAGENTA);
+      }
  }
 
+void Draw::ClrResult(int a, int u){ // a displays number, u switches btwn units
+ Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Force Produced is", FONT_1608, WHITE);
+  if (u== 1) {
+ Tft.lcd_display_num(48, 120+15, a, MAX_NLENGTH, FONT_1608, MAGENTA);
+ Tft.lcd_display_string(90, 135+15, (const uint8_t *)"kgf", FONT_1608, MAGENTA);
+            }
+ else {
+ Tft.lcd_display_num(48, 120+15, a*2.20462, MAX_NLENGTH, FONT_1608, MAGENTA);
+ Tft.lcd_display_string(90, 135+15, (const uint8_t *)"lbf", FONT_1608, MAGENTA);
+      }
+ }
+
+void Draw::DispProbe(int b){
+ Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Probe reading is", FONT_1608, MAGENTA);
+ Tft.lcd_display_num(48, 120+15, b, MAX_NLENGTH, FONT_1608, MAGENTA);
+}
+
+void Draw::ClrProbe(int b){ 
+ Tft.lcd_display_string(50, 105+15, (const uint8_t *)"Probe reading is", FONT_1608, WHITE);
+ Tft.lcd_display_num(48, 120+15, b, MAX_NLENGTH, FONT_1608, WHITE);
+ }
+ void Draw::StartTone(){
+  tone(15, 1480, 500);
+  noTone(15);
+ }
+ void Draw::EndTone(){
+  tone(15, 1740, 500);
+  noTone(15);
+ }
 
 //{
 //  Tft.lcd_display_string(80,  75, (const uint8_t *)"Menu", FONT_1608, colour);

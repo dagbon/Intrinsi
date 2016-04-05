@@ -1,6 +1,7 @@
 #ifndef StateMachine_h
 #define StateMeachine_h
 #include "Arduino.h"
+#define Fsensor = A14;
 
 const int STATE_HOME = 0;
 const int STATE_NEWMEAS = 1;

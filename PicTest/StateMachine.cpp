@@ -1,6 +1,6 @@
 #include <Draw.h>
 Draw draw;
-
+int z = 0;
 
 //program pins for buttons
 //const int button1 = 0;
@@ -25,7 +25,6 @@ void StateMachine::tick(int btn) {
     draw.ClrMenu();
   }
   else if (btn == 2) {
-    ;
     //=> Prev results mode
     state = STATE_PREVMEAS;
     draw.ClrMenu();
@@ -40,38 +39,37 @@ void StateMachine::tick(int btn) {
   }
   else if (btn == 5) { // => Bluetooth Stream mode
     state = STATE_STREAM
-            draw.ClrMenu();
+    draw.ClrMenu();
   }
   break;
-case STATE_NEWMEAS: //button one pressed
+  case STATE_NEWMEAS: //button one pressed
   draw.DispPinchPrompt();
   delay(2000);
   draw.ClrPinchPrompt();
   for (int i = 0; i < 10; i++) {
     if (btn == 1) {
       state = STATE_HOME;
-      break;
     } //check that button one not pressed
     draw.DispPinchArea(i);
     delay(2000);
     //wait until probe pinched delay(1000);
-    //measure force applied <= write function to do this
+    z = ReadForce();
     draw.ClrPinchArea(i);
-    draw.DispResult(i);
+    draw.DispResult(z);
     delay(1000);
-    draw.ClrResult(i);
+    draw.ClrResult(z);
   }
   break;
 case STATE_PREVMEAS: //button two pressed
   if (btn == 2) {
 
     // clear previous reading
-    draw.ClrResult();
+    draw.ClrResult(z);
     state = STATE_HOME;
   }
   else {
     // disp previous reading
-    draw.DispResult();
+    draw.DispResult(z);
   }
   break;
 case STATE_NEWPAT://button three pressed
@@ -93,9 +91,9 @@ case STATE_CAL://button four pressed
   }
   else {
     // disp probe reading
-    draw.DispProbe();
-  }
-            break;
+     draw.DispProbe();
+     }
+    break;
   case STATE_STREAM://button five pressed
     draw.ClrMenu();
     if (btn == 5) {
@@ -113,4 +111,9 @@ case STATE_CAL://button four pressed
     break;
 
   }
+}
+
+void ReadForce(){
+x = analogRead(Fsensor);
+return x;
 }

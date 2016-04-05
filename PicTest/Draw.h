@@ -7,17 +7,19 @@
 class Draw
 {
 	public:
-	void DispLogo();
-	void DispMenu();
-	void ClrMenu();
-	void DispPinchPrompt();
-	void ClrPinchPrompt();
-	void DispPinchArea(int x);
-	void ClrPinchArea(int x);
-	void DispResult();
-	void ClrResult();
-	void DispProbe();
-	void ClrProbe();
+	void DispLogo(); // Display IntrinsiForce Center of Screen
+	void DispMenu(); // Display Main Menu
+	void ClrMenu(); // Clear the Menu
+	void DispPinchPrompt(); // Display ready to pinch
+	void ClrPinchPrompt(); // Clear ready to pinch
+	void DispPinchArea(int x); // Display which fingers to pinch together
+	void ClrPinchArea(int x); // clear which ....
+	void DispResult(int a, int u); //Display number a, u selects unit (1 - kgf, else lbf)
+	void ClrResult(int a, int u); //clear previous result
+	void DispProbe(int b); //show probe reading
+	void ClrProbe(int b); //clear probe reading
+	void StartTone();//Play stone when starting
+	void EndTone();//Play tone when done
 
 
 //	private:
